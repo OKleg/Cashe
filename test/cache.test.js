@@ -8,7 +8,7 @@ test('1', () => {
     expect(countReq).toBe(3);
 });
 //2 Кэш хранит пары ключ-значение.
-test('2', () => {
+test('2 Кэш хранит пары ключ-значение.', () => {
     let cache = new Cache();
     cache.push("чайник","1000", 3);
     let value = cache.getValue("чайник")
@@ -16,15 +16,15 @@ test('2', () => {
     expect(value).toBe("1000");
 });
 //4 После каждого обращения нужно уменьшить число обращений на 1.
-test('4', () => {
+test('4 После каждого обращения нужно уменьшить число обращений на 1', () => {
     let cache = new Cache();
     cache.push("чайник","1000", 3);
     cache.getValue("чайник")
     let countReq = cache.getCount("чайник")
     expect(countReq).toBe(2);
 });
-//5 Если значения по ключу нет или если число обращений равно 0, то кэш возвращает null
-test('5', () => {
+//5 Если число обращений равно 0, то кэш возвращает null
+test('5 Если число обращений равно 0, то кэш возвращает null', () => {
     let cache = new Cache();
     cache.push("чайник","1000", 1);
     cache.getValue("чайник");
@@ -34,7 +34,7 @@ test('5', () => {
 });
 
 //5 Если значения по ключу нет, то кэш возвращает null
-test('5', () => {
+test('5 Если значения по ключу нет, то кэш возвращает null', () => {
     let cache = new Cache();
     cache.push("чайник","1000", 1);
     cache.getValue("чайник");
@@ -44,7 +44,7 @@ test('5', () => {
 });
 
 //6 Если пара ключ-значение задана без указания числа обращений, то число обращений равно 1.
-test('6', () => {
+test('6  число обращений по умолчанию равно 1', () => {
     let cache = new Cache();
     cache.push("чайник","1000");
     let countReq = cache.getCount("чайник");
@@ -53,7 +53,7 @@ test('6', () => {
 
 //7 Нужна возможность получить статистику работы кэша в виде списка обращений:
 //Ключ, Значение, Сколько осталось обращений.
-test('7', () => {
+test('Статистика', () => {
     let cache = new Cache();
     cache.push("чайник","1000",4);
     cache.getValue("чайник");
@@ -65,4 +65,18 @@ test('7', () => {
 });
 
 
+//7 Обработка исключений push
+test('Обработка исключений push', () => {
+    let cache = new Cache();
+    expect(()=> { 
+        cache.push(1, '1', 1); 
+    }).toThrow(new TypeError('the key type must be a string'));
+    expect(()=> { 
+        cache.push("чайник", 1, 1); 
+    }).toThrow(new TypeError('the value type must be a string'));
+    expect(()=> { 
+        cache.push("чайник", "1", "1"); 
+    }).toThrow(new TypeError('the count type must be a number'));
+
+});
 
